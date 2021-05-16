@@ -1,105 +1,126 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Dimensions,
-  TouchableWithoutFeedback,
-  TextInput,
-  StatusBar
-} from 'react-native';
-import Icons from 'react-native-vector-icons/MaterialIcons';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-const upadding = Math.round(SCREEN_WIDTH * 0.03);
+import Icons from 'react-native-feather1s';
 
-export default class Textinput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { bordercolor: props.error.length>0?'red':'black', elevation: 0, borderWidth: 0 };
-  }
+export default class SignUpTextInput extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: this.props.error || ''
+        }
+    }
 
-  render() {
-    return (
-      <View>
-      <View
-        style={[
-          styles.containerStyle,
-          this.props.styles
-        ]}
-      >
-        <View style={styles.textInputStyle}>
-          <TextInput
-            style={[styles.Textinputstyle, { borderBottomColor: 'white' }]}
-            placeholder={this.props.placeholder}
-            autocorrect={false}
-            selectionColor={'#FFA50033'}
-            autoCompleteType={'off'}
-            clearButtonMode={'always'}
-            keyboardAppearance={'dark'}
-            secureTextEntry={false || this.props.secureTextEntry}
-            
-            onChangeText={text => {
-              console.log('text =>', text);
-              this.props.onChange(text);
-            }}
-            value={this.props.value}
-            placeholderTextColor='grey'
-          />
-        </View>
-        <View style={styles.buttonStyle}>
-          {this.props.value.length > 0 ? (
-            <TouchableWithoutFeedback
-              onPress={() => {
-                this.props.onChange('');
-              }}
-            >
-              <Icons name={'clear'} color={this.props.error.length>0?'red':'green'} size={20} />
-            </TouchableWithoutFeedback>
-          ) : (
-            <View />
-          )}
-        </View>
-        </View>
-        {this.props.error.length>0 ? (
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingTop: upadding/2
-              }}
-            >
-        <Text style={{ color: 'red' , fontSize:upadding}}>{this.props.error}</Text>
+    getIcon = () => {
+        const { error } = this.state;
+        //console.log('Error:', error);
+        if (error.length === 2) {
+            return (
+                <Icons
+                    name={'check-circle'}
+                    color={'green'}
+                    size={25}
+                />
+            );
+        } else if (error.length > 2) {
+            return (
+                <Icons
+                    name={'x'}
+                    color={'#A52745'}
+                    size={25}
+                />
+            );
+
+        } else {
+            return (<View />);
+        }
+    };
+
+    render() {
+        return (
+            <View style={styles.containerStyle}>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        borderBottomWidth: 0.5,
+                        borderBottomColor: '#222',
+                        flex: 4,
+                    }}>
+                    <TextInput
+                        style={[styles.textInputStyle]}
+                        placeholder={this.props.placeholder}
+                        autocorrect={this.props.autocorrect}
+                        //selectionColor={'#FFA50033'}
+                        selectionColor={this.props.selectionColor}
+                        autoCompleteType={'off'}
+                        returnKeyType={this.props.returnKeyType}
+                        keyboardType={this.props.keyboardType}
+                        clearButtonMode={'always'}
+                        keyboardAppearance={'dark'}
+                        secureTextEntry={false}
+                        maxLength={this.props.maxLength}
+                        onBlur={this.props.onBlur}
+                        onChangeText={text => {
+                            console.log('text =>', text);
+                            this.props.onChangeText(text);
+                        }}
+                        value={this.props.value}
+                        placeholderTextColor={
+                            this.props.placeholderTextColor
+                        }
+                    />
+                    {/* <View style={styles.buttonStyle}>
+                        {
+                            this.getIcon()
+                        }
+                    </View> */}
+                </View>
+                {this.state.error.length !== 2 && this.state.error.length > 0 ? (
+                    <View
+                        style={{
+                            flex: 2,
+                            justifyContent: 'center',
+                        }}>
+                        <Text
+                            style={{
+                                color: 'red',
+                                fontSize: 12,
+                            }}>
+                            {this.props.error}
+                        </Text>
+                    </View>
+                ) : (
+                        <View
+                            style={{
+                                flex: 2,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        />
+                    )}
             </View>
-          ) : (
-            <View />
-          )}
-      </View>
-    );
-  }
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  containerStyle: {
-    borderRadius: upadding * 1.5,
-    borderBottomWidth:0.5,
-    borderBottomColor:'#A52745',
-    height: upadding * 3.5,
-    flexDirection: 'row'
-  },
-  Textinputstyle: {
-    flex: 1,
-    color: '#8D8D8C'
-  },
-  textInputStyle: {
-    flex: 9,
-    color: '#8D8D8C',
-
-    paddingLeft: upadding
-  },
-  buttonStyle: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
+    containerStyle: {
+        height: 60,
+        // flex: 1,
+        flexDirection: 'column',
+    },
+    textInputStyle: {
+        flex: 8,
+        height: 50,
+        fontSize: 15,
+        alignContent: 'center',
+        alignItems: 'center',
+        color: '#A52745',
+    },
+    buttonStyle: {
+        flex: 2,
+        height: 50,
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+    },
 });

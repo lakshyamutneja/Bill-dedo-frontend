@@ -1,4 +1,6 @@
 import React from 'react';
+import Constants from 'expo-constants';
+const { manifest } = Constants;
 import {
   Text,
   View,
@@ -9,7 +11,7 @@ import {
 } from 'react-native';
 import Header from './components/header';
 import { LinearGradient } from 'expo-linear-gradient';
-import Textinput from './components/textinput';
+import Textinput from './components/textinput 21';
 import Button from './components/button';
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const upadding = Math.round(SCREEN_WIDTH * 0.03);
@@ -90,7 +92,11 @@ export default class SignUp extends React.Component {
 
   onSignup = (user) => {
       this.setState({loading:true});
-    const url = `http://192.168.43.24:3000/bankdetail`;
+    const url = `http://${manifest.debuggerHost
+    .split(`:`)
+    .shift()
+    .concat(`:3000/bankdetail`)}`
+    ///const url = `http://192.168.43.24:3000/bankdetail`;
     fetch(url,{
       method: 'POST',
       headers: {

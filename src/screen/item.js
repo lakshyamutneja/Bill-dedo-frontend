@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {SafeAreaConsumer} from 'react-native-safe-area-context';
 import AwesomeAlert from 'react-native-awesome-alerts';
-import Input from './components/textinput';
+import Input from './components/TextInput';
 import Header from './components/header';
 import Button from './components/button';
 import Server from '../constants/Server';

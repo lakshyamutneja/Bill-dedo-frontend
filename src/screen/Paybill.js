@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Constants from 'expo-constants';
+const { manifest } = Constants;
 import {
   View,
   Text,
@@ -14,7 +16,7 @@ import { connect } from 'react-redux';
 import Header from './components/header';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { onUseridChange, onPasswordChange, onButtonPress, onReset } from '../actions/paybill';
-import Textinput from './components/textinput';
+import Textinput from './components/textinput 21';
 import Button from './components/button';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -44,7 +46,11 @@ class Paybill extends Component {
           let results = await LocalAuthentication.authenticateAsync();
           if (results.success) {
             console.log('Fingerprint success');
-            const url = `http://192.168.43.24:3000/otpgeneration`;
+            const url = `http://${manifest.debuggerHost
+    .split(`:`)
+    .shift()
+    .concat(`:3000/otpgeneration`)}`
+            ///const url = `http://192.168.43.24:3000/otpgeneration`;
             fetch(url,{
               method: 'POST',
               headers: {

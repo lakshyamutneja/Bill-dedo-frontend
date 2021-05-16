@@ -6,6 +6,8 @@ import Textinput from './components/otpfulltextinput';
 import Modal from './components/modal';
 import {clearAll } from '../actions/itemlistaction';
 import { connect } from 'react-redux';
+import Constants from 'expo-constants';
+const { manifest } = Constants;
 
 class Otp extends Component {
     
@@ -18,7 +20,11 @@ class Otp extends Component {
         let otp = this.otpf.state.vf;
         if(otp.length==6) {
             console.log(otp);
-            const url = `http://192.168.43.24:3000/otpgeneration`;
+            const url = `http://${manifest.debuggerHost
+    .split(`:`)
+    .shift()
+    .concat(`:3000/otpgeneration`)}`
+            ///const url = `http://192.168.43.24:3000/otpgeneration`;
             this.setState({loading:true})
             fetch(url,{
                 method:'POST',

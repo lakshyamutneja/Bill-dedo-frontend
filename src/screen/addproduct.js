@@ -13,7 +13,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Server from '../constants/Server';
 import axios from 'axios';
 import {SafeAreaConsumer} from 'react-native-safe-area-context';
-import Input from './components/textinput';
+import Input from './components/TextInput';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export default class Add extends Component {
